@@ -1,0 +1,13 @@
+ 哈希表解决：
+ if(nums1.length<0 || nums2.length<0) return [];
+    let ans = [],map = new Map();
+    for(const n of nums1){
+        let count = map.get(n)? map.get(n)+1 : 1;
+        map.set(n,count);
+    }
+    for(const n of nums2){
+       if(map.get(n)){
+           ans.push(n);
+       }
+    }
+    return [...new Set(ans)];
