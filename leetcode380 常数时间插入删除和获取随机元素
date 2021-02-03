@@ -1,0 +1,57 @@
+380. 常数时间插入、删除和获取随机元素
+设计一个支持在平均 时间复杂度 O(1) 下，执行以下操作的数据结构。
+
+insert(val)：当元素 val 不存在时，向集合中插入该项。
+remove(val)：元素 val 存在时，从集合中移除该项。
+getRandom：随机返回现有集合中的一项。每个元素应该有相同的概率被返回。
+
+示例：
+输入：["RandomizedSet","insert","remove","insert","getRandom","remove","insert","getRandom"]
+[[],[1],[2],[2],[],[1],[2],[]]
+输出：[null,true,false,true,1,true,false,2]
+
+方法一：map+数组 map:size has set delete
+var RandomizedSet = function() {
+    this.map = new Map();
+};
+
+RandomizedSet.prototype.insert = function(val) {
+    const {map} = this;
+    if(map.get(val)) return false;
+    map.set(val,1);
+    return true;
+};
+RandomizedSet.prototype.remove = function(val) {
+    const {map} = this;
+    if(!map.get(val)) return false;
+    map.delete(val);
+    return true;
+};
+RandomizedSet.prototype.getRandom = function() {
+    const {map} = this;
+    let arr = [...map.keys()];
+    if(arr.length===1) return arr[0];
+    let randomIndex = Math.floor(Math.random()*(arr.length));
+    return arr[randomIndex];
+};
+方法二：set+数组 set:size has add delete
+var RandomizedSet = function() {
+    this.set = new Set();
+};
+RandomizedSet.prototype.insert = function(val) {
+    const {set} = this;
+    if(set.has(val)) return false;
+    set.add(val);
+    return true;
+};
+RandomizedSet.prototype.remove = function(val) {
+    const {set} = this;
+    if(!set.has(val)) return false;
+    set.delete(val);
+    return true; 
+};
+RandomizedSet.prototype.getRandom = function() {
+    const {set} = this;
+    let randomIndex = parseInt(Math.random()*set.size);
+    return [...set][randomIndex];
+};
