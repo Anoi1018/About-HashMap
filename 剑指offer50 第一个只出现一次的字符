@@ -1,0 +1,26 @@
+剑指 Offer 50. 第一个只出现一次的字符
+在字符串 s 中找出第一个只出现一次的字符。如果没有，返回一个单空格。 s 只包含小写字母。
+
+示例:
+s = "abaccdeff"
+返回 "b"
+
+s = "" 
+返回 " "
+
+代码示意：
+var firstUniqChar = function(s) {
+    if(s.replace(/\s+/g,'')==='') return " ";
+    if(s.length===1) return s;
+    const map = new Map(),arr=[];
+    for(const char of s){
+        if(map.get(char)){
+            map.delete(char);
+            arr.push(char); //我们采用一个数组来标记已经出现过不止一次的字符
+        }else if(arr.indexOf(char)===-1){
+            map.set(char,1); //只有第一次出现的才会设置进map里
+        }
+    }
+    let ans  = map.keys().next().value; //第一个只出现了一次的字符
+    return ans?ans : " "; //不存在返回“ ”
+};
